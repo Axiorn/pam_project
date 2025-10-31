@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pam_project/core/services/hive_view.dart'; // melihat seluruh data hive
 import 'package:path_provider/path_provider.dart';
 import 'package:pam_project/presentation/screens/subscription/subscription_screen.dart';
 
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         AppRoutes.login: (context) => const LoginScreen(),
+        AppRoutes.hivebox: (context) => const HiveViewerScreen(),
         AppRoutes.register: (context) => const RegisterScreen(),
         AppRoutes.home: (context) => const HomeScreen(),
         AppRoutes.history: (context) => const BmiHistoryScreen(),
