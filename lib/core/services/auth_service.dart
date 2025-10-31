@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import '../constants/hive_boxes.dart';
 import '../models/user_model.dart';
+import '../utils/encryption_helper.dart'; // 
 
 class AuthService {
   late final Box<UserModel> _userBox;
@@ -11,12 +12,14 @@ class AuthService {
     _sessionBox = Hive.box(HiveBoxes.session);
   }
 
-  // ✅ Login
+  // ✅ Login dengan verifikasi hash
   bool login(String username, String password) {
     try {
-      final user = _userBox.values.firstWhere(
-        (u) => u.username == username && u.password == password,
-      );
+      final user = _userBox.values.firstWhere((u) => u.username == username);
+      final isValid = EncryptionHelper.verifyPassword(password, user.password);
+
+      if (!isValid) return false;
+
       _sessionBox.put('loggedInUser', user.username);
       return true;
     } catch (e) {
@@ -24,7 +27,7 @@ class AuthService {
     }
   }
 
-  // ✅ Register dengan status subscription default
+  // ✅ Register dengan password terenkripsi
   bool register({
     required String username,
     required String password,
@@ -33,9 +36,11 @@ class AuthService {
     final existing = _userBox.values.any((u) => u.username == username);
     if (existing) return false;
 
+    final hashedPassword = EncryptionHelper.hashPassword(password);
+
     final newUser = UserModel(
       username: username,
-      password: password,
+      password: hashedPassword,
       remainingQuota: 5,
       isSubscribed: false,
       subscriptionUntil: null,
@@ -54,7 +59,7 @@ class AuthService {
 
   // ✅ Ambil user yang sedang login
   UserModel? getCurrentUser() {
-  final username = _sessionBox.get('loggedInUser');
+    final username = _sessionBox.get('loggedInUser');
     if (username == null) return null;
 
     try {
