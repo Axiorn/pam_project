@@ -38,6 +38,7 @@ void main() async {
   await Hive.openBox<UserModel>(HiveBoxes.users);
   await Hive.openBox(HiveBoxes.session);
   await Hive.openBox<BmiResultModel>(HiveBoxes.bmi);
+  // await Hive.deleteBoxFromDisk(HiveBoxes.bmi); // untuk menghapus hive
 
   final sessionBox = Hive.box(HiveBoxes.session);
   final isLoggedIn = sessionBox.get('loggedInUser') != null;
