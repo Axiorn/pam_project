@@ -3,7 +3,6 @@ import '../../../core/services/api_service.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../core/services/hive_service.dart';
 import '../../../core/utils/location_helper.dart';
-import '../../../core/utils/date_time_helper.dart';
 import '../../../core/models/bmi_result_model.dart';
 import '../../../core/services/notification_service.dart';
 import '../../../core/models/user_model.dart';
@@ -82,7 +81,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
     });
 
     final location = await LocationHelper.getCurrentLocation();
-    final timestamp = DateTimeHelper.getFormattedNow();
+    final timestamp = DateTime.now().toIso8601String();
     final username = authService.getCurrentUser()?.username ?? 'unknown';
 
     final bmiResult = BmiResultModel(
@@ -100,7 +99,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
       notificationService.showSuccess(context, 'Data BMI berhasil disimpan.');
       authService.decreaseQuota();
       setState(() {
-        currentUser = authService.getCurrentUser(); // ✅ refresh kuota
+        currentUser = authService.getCurrentUser();
       });
     } else {
       notificationService.showError(context, 'Gagal menyimpan data BMI.');

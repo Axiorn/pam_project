@@ -75,6 +75,46 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
     });
   }
 
+  DateTime convertToTimeZone(DateTime original, String zone) {
+    print('[DEBUG] Waktu asli: $original');
+    DateTime adjusted;
+
+    switch (zone) {
+      case 'WIB':
+        adjusted = original;
+        break;
+      case 'WITA':
+        adjusted = original.add(const Duration(hours: 1));
+        break;
+      case 'WIT':
+        adjusted = original.add(const Duration(hours: 2));
+        break;
+      case 'London':
+        adjusted = original.subtract(const Duration(hours: 7));
+        break;
+      default:
+        adjusted = original;
+    }
+
+    print('[DEBUG] Waktu setelah konversi ke $zone: $adjusted');
+    return adjusted;
+  }
+
+  String formatDateTime(String rawDateTime) {
+    try {
+      final original = DateTime.parse(rawDateTime);
+      final adjusted = convertToTimeZone(original, selectedTimeZone);
+      return '${adjusted.day.toString().padLeft(2, '0')}-'
+          '${adjusted.month.toString().padLeft(2, '0')}-'
+          '${adjusted.year} '
+          '${adjusted.hour.toString().padLeft(2, '0')}:'
+          '${adjusted.minute.toString().padLeft(2, '0')}';
+    } catch (e) {
+      print('[ERROR] Gagal parsing waktu: $rawDateTime');
+      return rawDateTime;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +133,6 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
               onChanged: (_) => applyFilters(),
             ),
             const SizedBox(height: 12),
-
             Row(
               children: [
                 Expanded(
@@ -103,8 +142,10 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                         .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                         .toList(),
                     onChanged: (value) {
-                      selectedCategory = value!;
-                      applyFilters();
+                      setState(() {
+                        selectedCategory = value!;
+                        applyFilters();
+                      });
                     },
                     decoration: const InputDecoration(
                       labelText: 'Kategori BMI',
@@ -122,6 +163,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                     onChanged: (value) {
                       setState(() {
                         selectedTimeZone = value!;
+                        // ✅ Trigger rebuild agar waktu berubah
                       });
                     },
                     decoration: const InputDecoration(
@@ -140,6 +182,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                       itemCount: filteredBmi.length,
                       itemBuilder: (context, index) {
                         final bmi = filteredBmi[index];
+                        final formattedDate = formatDateTime(bmi.dateTime);
                         return Card(
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
@@ -147,7 +190,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                             subtitle: Text(
                               'Berat: ${bmi.weight} kg\n'
                               'Tinggi: ${bmi.height} cm\n'
-                              'Tanggal: ${bmi.dateTime}\n'
+                              'Tanggal: $formattedDate ($selectedTimeZone)\n'
                               'Lokasi: ${bmi.location}',
                             ),
                           ),

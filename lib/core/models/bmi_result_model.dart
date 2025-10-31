@@ -5,25 +5,25 @@ part 'bmi_result_model.g.dart';
 @HiveType(typeId: 1)
 class BmiResultModel extends HiveObject {
   @HiveField(0)
-  double weight;
+  late String username;
 
   @HiveField(1)
-  double height;
+  late double weight;
 
   @HiveField(2)
-  double bmi;
+  late double height;
 
   @HiveField(3)
-  String category;
+  late double bmi;
 
   @HiveField(4)
-  String dateTime;
+  late String category;
 
   @HiveField(5)
-  String location;
+  late String dateTime;
 
   @HiveField(6)
-  String username;
+  late String location;
 
   BmiResultModel({
     required this.weight,
