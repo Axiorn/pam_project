@@ -137,7 +137,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: selectedCategory,
+                    initialValue: selectedCategory,
                     items: categoryOptions
                         .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                         .toList(),
@@ -156,14 +156,13 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: selectedTimeZone,
+                    initialValue: selectedTimeZone,
                     items: timeZoneOptions
                         .map((z) => DropdownMenuItem(value: z, child: Text(z)))
                         .toList(),
                     onChanged: (value) {
                       setState(() {
                         selectedTimeZone = value!;
-                        // ✅ Trigger rebuild agar waktu berubah
                       });
                     },
                     decoration: const InputDecoration(
