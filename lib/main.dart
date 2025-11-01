@@ -44,7 +44,7 @@ void main() async {
   final sessionBox = Hive.box(HiveBoxes.session);
   final isLoggedIn = sessionBox.get('loggedInUser') != null;
 
-  runApp(MyApp(initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.hivebox));
+  runApp(MyApp(initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.login));
 }
 
 class MyApp extends StatelessWidget {
