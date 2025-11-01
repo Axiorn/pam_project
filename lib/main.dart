@@ -1,3 +1,4 @@
+// ignore_for_file: dead_code
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pam_project/core/services/hive_view.dart'; // melihat seluruh data hive
