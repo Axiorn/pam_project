@@ -24,7 +24,7 @@ void main() async {
   Hive.registerAdapter(UserModelAdapter()); // typeId: 0
   Hive.registerAdapter(BmiResultModelAdapter()); // typeId: 1
 
-  const isDevMode = false;
+  const isDevMode = false; //reset database hive
   if (isDevMode) {
     if (Hive.isBoxOpen(HiveBoxes.users)) {
       await Hive.box(HiveBoxes.users).close();
@@ -40,12 +40,11 @@ void main() async {
   await Hive.openBox<UserModel>(HiveBoxes.users);
   await Hive.openBox(HiveBoxes.session);
   await Hive.openBox<BmiResultModel>(HiveBoxes.bmi);
-  // await Hive.deleteBoxFromDisk(HiveBoxes.bmi); // untuk menghapus hive
 
   final sessionBox = Hive.box(HiveBoxes.session);
   final isLoggedIn = sessionBox.get('loggedInUser') != null;
 
-  runApp(MyApp(initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.login));
+  runApp(MyApp(initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.hivebox));
 }
 
 class MyApp extends StatelessWidget {
