@@ -1,7 +1,8 @@
 import 'package:hive/hive.dart';
 import '../constants/hive_boxes.dart';
 import '../models/user_model.dart';
-import '../utils/encryption_helper.dart'; // 
+import '../utils/encryption_helper.dart';
+import 'notification_controller.dart';
 
 class AuthService {
   late final Box<UserModel> _userBox;
@@ -12,7 +13,6 @@ class AuthService {
     _sessionBox = Hive.box(HiveBoxes.session);
   }
 
-  // ✅ Login dengan verifikasi hash
   bool login(String username, String password) {
     try {
       final user = _userBox.values.firstWhere((u) => u.username == username);
@@ -27,7 +27,6 @@ class AuthService {
     }
   }
 
-  // ✅ Register dengan password terenkripsi
   bool register({
     required String username,
     required String password,
@@ -52,12 +51,10 @@ class AuthService {
     return true;
   }
 
-  // ✅ Logout
   void logout() {
     _sessionBox.delete('loggedInUser');
   }
 
-  // ✅ Ambil user yang sedang login
   UserModel? getCurrentUser() {
     final username = _sessionBox.get('loggedInUser');
     if (username == null) return null;
@@ -70,7 +67,6 @@ class AuthService {
     }
   }
 
-  // ✅ Kurangi kuota BMI
   void decreaseQuota() {
     final username = _sessionBox.get('loggedInUser');
     if (username == null) return;
@@ -86,8 +82,7 @@ class AuthService {
     }
   }
 
-  // ✅ Aktifkan langganan + tambah kuota sesuai paket
-  void activateSubscription({required int days, required int additionalQuota}) {
+  Future<void> activateSubscription({required int days, required int additionalQuota}) async {
     final username = _sessionBox.get('loggedInUser');
     if (username == null) return;
 
@@ -97,7 +92,12 @@ class AuthService {
       user.isSubscribed = true;
       user.subscriptionUntil = until.toIso8601String().split('T').first;
       user.remainingQuota += additionalQuota;
-      user.save();
+      await user.save();
+
+      await NotificationController.showSuccessNotification(
+        'Langganan Aktif',
+        'Langganan berhasil diaktifkan hingga ${user.subscriptionUntil}.',
+      );
     } catch (e) {
       // user tidak ditemukan
     }

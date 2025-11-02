@@ -6,6 +6,7 @@ import '../../../core/utils/location_helper.dart';
 import '../../../core/models/bmi_result_model.dart';
 import '../../../core/services/notification_service.dart';
 import '../../../core/models/user_model.dart';
+import '../../../core/services/notification_controller.dart';
 
 class BmiCalculatorScreen extends StatefulWidget {
   const BmiCalculatorScreen({super.key});
@@ -97,6 +98,10 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
     final success = await hiveService.saveBmiResult(bmiResult);
     if (success) {
       notificationService.showSuccess(context, 'Data BMI berhasil disimpan.');
+      await NotificationController.showSuccessNotification(
+        'BMI Tersimpan',
+        'BMI kamu berhasil dihitung dan disimpan.',
+      );
       authService.decreaseQuota();
       setState(() {
         currentUser = authService.getCurrentUser();
