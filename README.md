@@ -30,7 +30,7 @@ Jalankan perintah berikut di terminal untuk meng-clone proyek ke komputer lokal 
 
 ```bash
 # Clone repository
-git clone [https://github.com/ldclabs/anda ](https://github.com/Axiorn/pam_project)
+git clone https://github.com/Axiorn/pam_project
 
 # Masuk ke direktori proyek
 cd pam_project
