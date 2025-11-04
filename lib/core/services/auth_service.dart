@@ -82,7 +82,11 @@ class AuthService {
     }
   }
 
-  Future<void> activateSubscription({required int days, required int additionalQuota}) async {
+  Future<void> activateSubscription({
+    required int days,
+    required int additionalQuota,
+    required String packageName,
+  }) async {
     final username = _sessionBox.get('loggedInUser');
     if (username == null) return;
 
@@ -95,8 +99,8 @@ class AuthService {
       await user.save();
 
       await NotificationController.showSuccessNotification(
-        'Langganan Aktif',
-        'Langganan berhasil diaktifkan hingga ${user.subscriptionUntil}.',
+        'Langganan $packageName Aktif',
+        'Paket $packageName berhasil diaktifkan hingga ${user.subscriptionUntil}.',
       );
     } catch (e) {
       // user tidak ditemukan

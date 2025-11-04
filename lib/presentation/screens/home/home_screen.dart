@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: BottomNavbar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
