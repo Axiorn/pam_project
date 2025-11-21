@@ -25,6 +25,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
+    if (fullName.isEmpty) {
+      showCustomSnackbar(context, 'Nama lengkap harus diisi.', isError: true);
+      return;
+    } else if (username.isEmpty) {
+      showCustomSnackbar(context, 'Username harus diisi.', isError: true);
+      return;
+    } else if (password.isEmpty || password.length < 8) {
+      showCustomSnackbar(context, 'Password minimal 8 karakter.', isError: true);
+      return;
+    }
+
     final success = authService.register(
       username: username,
       password: password,
@@ -35,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       showCustomSnackbar(context, 'Registrasi berhasil!');
       Navigator.pushReplacementNamed(context, AppRoutes.login);
     } else {
-      showCustomSnackbar(context, 'Username sudah digunakan.');
+      showCustomSnackbar(context, 'Username sudah digunakan.', isError: true);
     }
   }
 

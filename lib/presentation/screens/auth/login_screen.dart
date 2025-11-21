@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showCustomSnackbar(context, 'Login berhasil!');
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
-      showCustomSnackbar(context, 'Login gagal. Periksa username dan password.');
+      showCustomSnackbar(context, 'Login gagal. Periksa username dan password.', isError: true);
     }
   }
 

@@ -50,7 +50,7 @@ class FeedbackScreen extends StatelessWidget {
               title: 'Kesan',
               emoji: '💡',
               content:
-                  'Mata kuliah ini sangat membantu saya memahami praktik pengembangan aplikasi mobile secara nyata. Saya jadi lebih percaya diri membangun aplikasi Flutter yang modular dan terintegrasi.',
+                  'Mata kuliah ini sangat membantu saya memahami praktik pengembangan aplikasi mobile secara nyata. Saya jadi lebih percaya diri membangun aplikasi Flutter.',
             ),
             const SizedBox(height: 20),
 
@@ -60,18 +60,6 @@ class FeedbackScreen extends StatelessWidget {
               emoji: '📚',
               content:
                   'Semoga ke depannya materi bisa lebih banyak studi kasus nyata dan diberikan tantangan proyek yang lebih kompleks agar kami bisa belajar lebih dalam dan siap menghadapi dunia kerja.',
-            ),
-
-            const SizedBox(height: 40),
-
-            // Footer Message
-            Text(
-              '✨ Keep learning and keep building amazing things! ✨',
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
             ),
           ],
         ),
@@ -102,8 +90,8 @@ class FeedbackCard extends StatelessWidget {
       color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       elevation: isDark ? 2 : 4,
       shadowColor: isDark
-          ? Colors.black.withOpacity(0.4)
-          : Colors.grey.withOpacity(0.15),
+          ? Colors.black.withOpacity(0.8)
+          : Colors.grey.withOpacity(0.55),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),

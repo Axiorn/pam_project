@@ -30,7 +30,7 @@ class HiveViewerScreen extends StatelessWidget {
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: ListTile(
-                        title: Text(user.username),
+                        title: Text('Username : ${user.username}'),
                         subtitle: Text(
                           'Nama: ${user.fullName}\n'
                           'Password (hash): ${user.password}\n'

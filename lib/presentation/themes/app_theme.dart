@@ -11,9 +11,10 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: _seedColor,
       brightness: Brightness.light,
+    ).copyWith(
+      surface: Colors.white,
     ),
-
-    scaffoldBackgroundColor: const Color(0xFFF2F4FA),
+    scaffoldBackgroundColor: Color(0xFFF2F4FA),
 
     textTheme: const TextTheme(
       bodyMedium: TextStyle(fontSize: 16, color: Colors.black87),
@@ -24,12 +25,6 @@ class AppTheme {
     ),
 
     cardColor: Colors.white,
-    // cardTheme: CardTheme(
-    //   surfaceTintColor: Colors.white, // FIX: ganti dari 'color:' agar tidak error
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    //   elevation: 6,
-    //   margin: EdgeInsets.zero,
-    // ),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -97,9 +92,10 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: _seedColor,
       brightness: Brightness.dark,
+    ).copyWith(
+      surface: Color(0xFF121212),
     ),
-
-    scaffoldBackgroundColor: const Color(0xFF121212),
+    scaffoldBackgroundColor: Colors.black,
 
     textTheme: const TextTheme(
       bodyMedium: TextStyle(fontSize: 16, color: Colors.white),
@@ -109,13 +105,7 @@ class AppTheme {
           TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
     ),
 
-    cardColor: const Color(0xFF1E1E1E),
-    // cardTheme: CardTheme(
-    //   surfaceTintColor: const Color(0xFF1E1E1E), // FIXED
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    //   elevation: 4,
-    //   margin: EdgeInsets.zero,
-    // ),
+    cardColor: Color(0xFF1E1E1E),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,

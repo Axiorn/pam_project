@@ -30,9 +30,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
   final Map<String, double> currencyRates = {
     'IDR': 1.0,
-    'USD': 0.00065,
-    'YEN': 0.097,
-    'SGD': 0.00088,
+    'USD': 0.0000598,
+    'YEN': 0.00926,
+    'SGD': 0.0000778,
   };
 
   @override

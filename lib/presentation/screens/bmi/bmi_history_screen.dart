@@ -121,18 +121,18 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Kalkulasi BMI'),
         centerTitle: true,
         elevation: 0,
-        // 🩶 Perbaikan utama di sini:
-        backgroundColor: isDark ? Colors.black : Colors.grey[100],
-        foregroundColor: isDark ? Colors.white : Colors.black,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        foregroundColor: textTheme.bodyMedium?.color,
       ),
-      backgroundColor: isDark ? Colors.black : Colors.grey[100],
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -143,11 +143,6 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
               decoration: InputDecoration(
                 labelText: 'Cari berdasarkan berat (kg)',
                 prefixIcon: const Icon(Icons.search),
-                filled: true,
-                fillColor: isDark ? Colors.grey[900] : Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
               ),
               onChanged: (_) => applyFilters(),
             ),
@@ -162,7 +157,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                     items: categoryOptions
                         .map((c) => DropdownMenuItem(
                               value: c,
-                              child: Text(c),
+                              child: Text(c, style: textTheme.bodyMedium),
                             ))
                         .toList(),
                     onChanged: (value) {
@@ -171,14 +166,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                         applyFilters();
                       });
                     },
-                    decoration: InputDecoration(
-                      labelText: 'Kategori BMI',
-                      filled: true,
-                      fillColor: isDark ? Colors.grey[900] : Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
+                    decoration: const InputDecoration(labelText: 'Kategori BMI'),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -188,7 +176,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                     items: timeZoneOptions
                         .map((z) => DropdownMenuItem(
                               value: z,
-                              child: Text(z),
+                              child: Text(z, style: textTheme.bodyMedium),
                             ))
                         .toList(),
                     onChanged: (value) {
@@ -196,14 +184,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                         selectedTimeZone = value!;
                       });
                     },
-                    decoration: InputDecoration(
-                      labelText: 'Zona Waktu',
-                      filled: true,
-                      fillColor: isDark ? Colors.grey[900] : Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
+                    decoration: const InputDecoration(labelText: 'Zona Waktu'),
                   ),
                 ),
               ],
@@ -217,8 +198,8 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                   ? Center(
                       child: Text(
                         'Tidak ada data yang cocok.',
-                        style: TextStyle(
-                          color: isDark ? Colors.grey[400] : Colors.black54,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: textTheme.bodyMedium?.color?.withOpacity(0.6),
                         ),
                       ),
                     )
@@ -231,7 +212,7 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                             getCategoryColor(bmi.category, context);
 
                         return Card(
-                          color: isDark ? Colors.grey[900] : Colors.white,
+                          color: theme.cardColor,
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -240,14 +221,12 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundColor: categoryColor.withOpacity(0.2),
-                              child: Icon(
-                                Icons.fitness_center,
-                                color: categoryColor,
-                              ),
+                              child: Icon(Icons.fitness_center,
+                                  color: categoryColor),
                             ),
                             title: Text(
                               'BMI: ${bmi.bmi.toStringAsFixed(2)} - ${bmi.category}',
-                              style: TextStyle(
+                              style: textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: categoryColor,
                               ),
@@ -260,11 +239,9 @@ class _BmiHistoryScreenState extends State<BmiHistoryScreen> {
                                 'Tanggal: $formattedDate\n'
                                 'Format Waktu: ($selectedTimeZone)\n'
                                 'Lokasi: ${bmi.location}',
-                                style: TextStyle(
+                                style: textTheme.bodySmall?.copyWith(
                                   height: 1.4,
-                                  color: isDark
-                                      ? Colors.grey[300]
-                                      : Colors.grey[800],
+                                  color: textTheme.bodySmall?.color,
                                 ),
                               ),
                             ),

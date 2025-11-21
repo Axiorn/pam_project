@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withOpacity(0.25),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CircleAvatar(
                       radius: 80,
                       backgroundImage: imageProvider,
-                      backgroundColor: colorScheme.surfaceVariant,
+                      backgroundColor: colorScheme.surfaceContainerHighest,
                       child: imageProvider == null
                           ? Icon(Icons.person,
                               size: 80, color: colorScheme.onSurfaceVariant)
